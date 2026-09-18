@@ -1,0 +1,6 @@
+{
+  "type": "control",
+  "request_id": "9636f8ca-4d0c-4dbd-b38a-358042351f8d",
+  "action": "type_text",
+  "payload": { "text": "Привет, Windows! 👋" }
+}

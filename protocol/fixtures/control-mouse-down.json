@@ -1,0 +1,10 @@
+{
+  "type": "control",
+  "request_id": "018f08a5-94ae-747e-9950-67bbd774ab23",
+  "action": "mouse_button",
+  "payload": {
+    "button": "left",
+    "state": "down"
+  }
+}
+

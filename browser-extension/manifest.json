@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Remote — Video Sites",
+  "version": "0.2.0",
+  "description": "Добавляет управление поддерживаемыми видеосайтами в Smart Remote.",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "https://animevost.org/*",
+    "https://*.animevost.org/*",
+    "https://*.vost.pw/*",
+    "https://old.yummyani.me/*",
+    "https://*.yani.tv/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://animevost.org/*",
+        "https://*.animevost.org/*",
+        "https://*.vost.pw/*",
+        "https://old.yummyani.me/*",
+        "https://*.yani.tv/*"
+      ],
+      "js": [
+        "adapters/registry.js",
+        "adapters/animevost.js",
+        "adapters/yummyanime.js",
+        "content.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' ws://127.0.0.1:8765"
+  }
+}

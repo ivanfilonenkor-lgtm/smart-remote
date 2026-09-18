@@ -1,0 +1,8 @@
+{
+  "type": "client_hello",
+  "protocol": 1,
+  "client_id": "018f08a5-7b42-7ee2-a53d-e2e2447839f7",
+  "device_name": "Living room phone",
+  "capabilities": ["pointer", "scroll", "volume", "media"]
+}
+

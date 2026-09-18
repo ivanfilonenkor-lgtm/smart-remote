@@ -1,0 +1,17 @@
+{
+  "type": "anime_state",
+  "revision": 3,
+  "available": true,
+  "site_id": "animevost",
+  "site_name": "AnimeVost",
+  "title": "Fixture anime",
+  "episode": 4,
+  "episode_count": 12,
+  "playing": true,
+  "skip_available": false,
+  "previous_available": true,
+  "next_available": true,
+  "auto_mode": true,
+  "countdown_seconds": null,
+  "message": null
+}

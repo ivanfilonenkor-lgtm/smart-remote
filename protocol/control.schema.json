@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smart-remote.local/protocol/control-v1.schema.json",
+  "title": "Smart Remote protocol v1 text frame",
+  "oneOf": [
+    { "$ref": "#/$defs/clientHello" },
+    { "$ref": "#/$defs/serverHello" },
+    { "$ref": "#/$defs/control" },
+    { "$ref": "#/$defs/ack" },
+    { "$ref": "#/$defs/state" },
+    { "$ref": "#/$defs/animeState" },
+    { "$ref": "#/$defs/heartbeat" }
+  ],
+  "$defs": {
+    "clientHello": {
+      "type": "object",
+      "required": ["type", "protocol", "client_id", "device_name", "capabilities"],
+      "properties": {
+        "type": { "const": "client_hello" },
+        "protocol": { "const": 1 },
+        "client_id": { "type": "string", "format": "uuid" },
+        "device_name": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "capabilities": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "additionalProperties": true
+    },
+    "serverHello": {
+      "type": "object",
+      "required": ["type", "protocol", "server_id", "server_name", "capabilities", "volume", "muted"],
+      "properties": {
+        "type": { "const": "server_hello" },
+        "protocol": { "const": 1 },
+        "server_id": { "type": "string", "format": "uuid" },
+        "server_name": { "type": "string" },
+        "capabilities": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "volume": { "type": "number", "minimum": 0, "maximum": 1 },
+        "muted": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "control": {
+      "type": "object",
+      "required": ["type", "request_id", "action", "payload"],
+      "properties": {
+        "type": { "const": "control" },
+        "request_id": { "type": "string", "format": "uuid" },
+        "action": { "enum": ["mouse_button", "set_volume", "set_mute", "type_text", "key_press", "back", "play_pause", "show_desktop", "anime_previous", "anime_play_pause", "anime_next", "anime_skip", "anime_cancel_next", "anime_set_auto_mode"] },
+        "payload": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "ack": {
+      "type": "object",
+      "required": ["type", "request_id", "ok"],
+      "properties": {
+        "type": { "const": "ack" },
+        "request_id": { "type": "string" },
+        "ok": { "type": "boolean" },
+        "error": {
+          "type": "object",
+          "required": ["code", "message"],
+          "properties": {
+            "code": { "type": "string" },
+            "message": { "type": "string" }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "state": {
+      "type": "object",
+      "required": ["type", "revision", "volume", "muted"],
+      "properties": {
+        "type": { "const": "state" },
+        "revision": { "type": "integer", "minimum": 0 },
+        "volume": { "type": "number", "minimum": 0, "maximum": 1 },
+        "muted": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "animeState": {
+      "type": "object",
+      "required": ["type", "revision", "available", "playing", "skip_available", "previous_available", "next_available", "auto_mode"],
+      "properties": {
+        "type": { "const": "anime_state" },
+        "revision": { "type": "integer", "minimum": 0 },
+        "available": { "type": "boolean" },
+        "site_id": { "type": ["string", "null"], "maxLength": 64 },
+        "site_name": { "type": ["string", "null"], "maxLength": 80 },
+        "title": { "type": ["string", "null"], "maxLength": 160 },
+        "episode": { "type": ["integer", "null"], "minimum": 1, "maximum": 10000 },
+        "episode_count": { "type": ["integer", "null"], "minimum": 1, "maximum": 10000 },
+        "playing": { "type": "boolean" },
+        "skip_available": { "type": "boolean" },
+        "previous_available": { "type": "boolean" },
+        "next_available": { "type": "boolean" },
+        "auto_mode": { "type": "boolean" },
+        "countdown_seconds": { "type": ["integer", "null"], "minimum": 0, "maximum": 30 },
+        "message": { "type": ["string", "null"], "maxLength": 160 }
+      },
+      "additionalProperties": true
+    },
+    "heartbeat": {
+      "type": "object",
+      "required": ["type", "sequence"],
+      "properties": {
+        "type": { "const": "heartbeat" },
+        "sequence": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    }
+  }
+}

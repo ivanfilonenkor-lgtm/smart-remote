@@ -1,0 +1,25 @@
+# Rust
+/remote-core/target/
+
+# Android / Gradle
+/.gradle/
+/android/.gradle/
+/android/local.properties
+/android/**/build/
+*.apk
+*.aab
+
+# IDEs
+/.idea/
+*.iml
+.vscode/
+/.codex-remote-attachments/
+
+# Windows
+Thumbs.db
+Desktop.ini
+*.pdb
+
+# Local logs and secrets
+*.log
+.env
